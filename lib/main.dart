@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:week_7_android_features/contact_forms.dart';
 import 'contact.dart';
 
 void main() => runApp(const MyApp());
@@ -58,8 +59,22 @@ class _ContactListState extends State<ContactList> {
 
   @override
   Widget build(BuildContext context) {
+    int index = 0;
     return Scaffold(
-        appBar: AppBar(title: const Text('My Contacts')), body: _body());
+        appBar: AppBar(title: const Text('My Contacts')),
+        body: _body(),
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.person),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ContactForms(),
+              ),
+            );
+          },
+        ));
   }
 
   Widget _body() {
@@ -70,14 +85,15 @@ class _ContactListState extends State<ContactList> {
       return const Center(child: CircularProgressIndicator());
     }
     return ListView.builder(
-        itemCount: _contacts!.length,
-        itemBuilder: (context, i) => ListTile(
-            title: Text(_contacts![i].displayName),
-            onTap: () {
-              FlutterContacts.getContact(_contacts![i].id).then((contact) {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => ContactPage(contact!)));
-              });
-            }));
+      itemCount: _contacts!.length,
+      itemBuilder: (context, i) => ListTile(
+          title: Text(_contacts![i].displayName),
+          onTap: () {
+            FlutterContacts.getContact(_contacts![i].id).then((contact) {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => ContactPage(contact!)));
+            });
+          }),
+    );
   }
 }

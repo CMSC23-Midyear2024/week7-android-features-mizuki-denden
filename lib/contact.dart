@@ -29,6 +29,16 @@ class ContactPage extends StatelessWidget {
             child: Text(
                 'Email address: ${contact.emails.isNotEmpty ? contact.emails.first.address : '(none)'}'),
           ),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ContactPage(contact),
+                    ));
+              },
+              child: const Text("Reset")),
         ]),
       ));
 }
